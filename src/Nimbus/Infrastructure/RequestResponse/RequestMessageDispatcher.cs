@@ -224,9 +224,8 @@ namespace Nimbus.Infrastructure.RequestResponse
         internal static MethodInfo GetGenericDispatchMethodFor(object request)
         {
             var closedGenericHandlerType =
-                request.GetType()
-                       .GetInterfaces().Where(t => t.IsClosedTypeOf(typeof (IBusRequest<,>)))
-                       .Single();
+                request.GetType().GetInterfaces()
+                       .First(t => t.IsClosedTypeOf(typeof (IBusRequest<,>)));
 
             var genericArguments = closedGenericHandlerType.GetGenericArguments();
             var requestType = genericArguments[0];
